@@ -8,7 +8,7 @@ const Card = require('./models/cardModel');
 const port = process.env.PORT || 3000;
 const atmRouter = express.Router();
 
-atmRouter.route('/card')
+atmRouter.route('/cards')
     .get(function (req, res) {
         let query = {};
         if(req.query.cardID){
@@ -19,6 +19,16 @@ atmRouter.route('/card')
                 res.status(500).send(err);
             else
                 res.json(cards);
+        });
+    });
+
+atmRouter.route('/cards/:cardID')
+    .get(function (req, res) {
+        Card.findByID(req.params.cardID, function(err, card){
+            if(err)
+                res.status(500).send(err);
+            else
+                res.json(card);
         });
     });
 
