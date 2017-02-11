@@ -10,7 +10,10 @@ const atmRouter = express.Router();
 
 atmRouter.route('/card')
     .get(function (req, res) {
-        let query = req.query;
+        let query = {};
+        if(req.query.cardID){
+            query.cardID = req.query.cardID;
+        }
         Card.find(query, function(err, cards){
             if(err)
                 res.status(500).send(err);
