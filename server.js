@@ -1,13 +1,22 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const app = express();
+const db = mongoose.connect('mongodb://localhost:27017/atm-db');
+const Card = require('./models/cardModel');
+
 const port = process.env.PORT || 3000;
 const atmRouter = express.Router();
 
-atmRouter.route('/atm')
+atmRouter.route('/card')
     .get(function (req, res) {
-        let responseJson = {cardID: 1, cardNum: 1234432112344321, cardHolder: "Name Surname"};
-        res.json(responseJson)
+        let query = req.query;
+        Card.find(query, function(err, cards){
+            if(err)
+                res.status(500).send(err);
+            else
+                res.json(cards);
+        });
     });
 
 app.use('/api', atmRouter);
