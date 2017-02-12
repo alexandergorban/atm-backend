@@ -1,7 +1,7 @@
 const express = require('express');
 const Card = require('../models/cardModel');
 
-const routes = function () {
+function routes() {
     const atmRouter = express.Router();
 
     atmRouter.route('/cards')
@@ -26,7 +26,7 @@ const routes = function () {
 
     atmRouter.route('/cards/:cardNumber')
         .get(function (req, res) {
-            Card.findByNumber(req.params.cardNumber, function(err, card){
+            Card.findOne({ Number: req.params.cardNumber }, function(err, card){
                 if(err)
                     res.status(500).send(err);
                 else
@@ -34,6 +34,6 @@ const routes = function () {
             });
         });
     return atmRouter;
-};
+}
 
 module.exports = routes();

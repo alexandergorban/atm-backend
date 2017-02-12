@@ -5,10 +5,10 @@ const cardModel = new Schema({
     Number: {type: Number},
     ExpiresEndDate: {type: Date},
     CVV: {type: String},
-    Pass: {type: String},
-    cardHolder: {type: String},
-    cardType: {type: String},
-    cardActive: {type: Boolean, default:false}
+    Pin: {type: String},
+    CardHolder: {type: String},
+    CardType: {type: String},
+    CardActive: {type: Boolean, default:false}
 });
 
 module.exports = mongoose.model('Card', cardModel);

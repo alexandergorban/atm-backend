@@ -14,6 +14,9 @@ app.use(bodyParser.json());
 
 app.use('/api', atmRouter);
 
+verificationRouter = require('./Routes/verificationRoutes');
+app.use('/api', verificationRouter);
+
 app.get('/', function (req, res) {
     res.send('welcome to API');
 });
