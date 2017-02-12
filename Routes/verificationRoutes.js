@@ -15,9 +15,9 @@ function routes() {
                 });
         });
 
-    verificationRouter.route('/checkpin/:cardPin')
+    verificationRouter.route('/checkpin/:cardNumber&:cardPin')
         .get(function (req, res) {
-            cardVerification.pinVerification(req.params.cardPin)
+            cardVerification.pinVerification(req.params.cardNumber, req.params.cardPin)
                 .then(result => {
                     res.status(200).send(true);
                 })

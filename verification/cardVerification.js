@@ -11,13 +11,12 @@ class CardVerification{
                     reject(false);
                 }
             });
-
         });
     }
 
-    pinVerification(pinEntered){
+    pinVerification(numberEntered, pinEntered){
         return new Promise((resolve, reject) => {
-            Card.findOne({ Pin: (pinEntered).toString() }, function (err, card) {
+            Card.findOne({ Number: numberEntered, Pin: (pinEntered).toString() }, function (err, card) {
                 if (card){
                     resolve(true);
                 } else {
