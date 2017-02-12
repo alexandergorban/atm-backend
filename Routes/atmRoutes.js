@@ -1,6 +1,10 @@
 const express = require('express');
 const Card = require('../models/cardModel');
 
+/**
+ * ATM Routes. Return All Cards and Card by Number, POST New Card
+ * @returns {Routes}
+ */
 function routes() {
     const atmRouter = express.Router();
 
@@ -26,7 +30,7 @@ function routes() {
 
     atmRouter.route('/cards/:cardNumber')
         .get(function (req, res) {
-            Card.findOne({ Number: req.params.cardNumber }, function(err, card){
+            Card.findOne({ Number: (req.params.cardNumber).toString() }, function(err, card){
                 if(err)
                     res.status(500).send(err);
                 else

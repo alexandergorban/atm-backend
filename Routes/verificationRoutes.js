@@ -1,6 +1,9 @@
 const express = require('express');
 const cardVerification = require('../verification/cardVerification');
-
+/**
+ * Verification Router. Check Card Number and Pin Code by API URLs
+ * @returns {Router} verificationRouter
+ */
 function routes() {
     const verificationRouter = express.Router();
 
