@@ -3,7 +3,7 @@ const Card = require('../models/cardModel');
 
 /**
  * ATM Routes. Return All Cards and Card by Number, POST New Card
- * @returns {Routes}
+ * @returns {Router}
  */
 function routes() {
     const atmRouter = express.Router();

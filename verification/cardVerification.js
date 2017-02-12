@@ -13,7 +13,7 @@ class CardVerification{
      */
     numberVerification(numberEntered){
         return new Promise((resolve, reject) => {
-            Card.findOne({ Number: (numberEntered).toString() }, function (err, card) {
+            Card.findOne({ Number: (numberEntered).toString(), CardActive: true }, function (err, card) {
                 if (card){
                     resolve(true);
                 } else {
@@ -31,13 +31,14 @@ class CardVerification{
      */
     pinVerification(numberEntered, pinEntered){
         return new Promise((resolve, reject) => {
-            Card.findOne({ Number: (numberEntered).toString(), Pin: (pinEntered).toString() }, function (err, card) {
-                if (card){
-                    resolve(true);
-                } else {
-                    reject(false);
-                }
-            });
+            Card.findOne({ Number: (numberEntered).toString(), Pin: (pinEntered).toString(), CardActive: true },
+                function (err, card) {
+                    if (card){
+                        resolve(true);
+                    } else {
+                        reject(false);
+                    }
+                });
         });
     }
 }
