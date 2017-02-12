@@ -1,30 +1,32 @@
 const express = require('express');
-const Card = require('../models/cardModel');
+const cardVerification = require('../verification/cardVerification');
 
 function routes() {
-    const atmRouter = express.Router();
+    const verificationRouter = express.Router();
 
-    atmRouter.route('/checkcard/:cardNumber')
+    verificationRouter.route('/checkcard/:cardNumber')
         .get(function (req, res) {
-            Card.findOne({ Number: req.params.cardNumber }, function(err, card){
-                if(err)
-                    res.status(500).send(err);
-                else
+            cardVerification.numberVerification(req.params.cardNumber)
+                .then(result => {
                     res.status(200).send(true);
-            });
+                })
+                .catch(result => {
+                    res.status(500).send(false);
+                });
         });
 
-    atmRouter.route('/checkpin/:cardPin')
+    verificationRouter.route('/checkpin/:cardPin')
         .get(function (req, res) {
-            Card.findOne({ Pin: (req.params.cardPin).toString() }, function(err, card){
-                if(err)
-                    res.status(500).send(err);
-                else
+            cardVerification.pinVerification(req.params.cardPin)
+                .then(result => {
                     res.status(200).send(true);
-            });
+                })
+                .catch(result => {
+                    res.status(500).send(false);
+                });
         });
 
-    return atmRouter;
+    return verificationRouter;
 }
 
 module.exports = routes();
