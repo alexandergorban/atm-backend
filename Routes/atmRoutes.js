@@ -54,8 +54,25 @@ function routes() {
             req.card.CardHolder = req.body.CardHolder;
             req.card.CardType = req.body.CardType;
             req.card.CardActive = req.body.CardActive;
-            req.card.save();
-            res.json(req.card);
+            req.card.save(function(err){
+                if(err)
+                    res.status(500).send(err);
+                else
+                    res.json(req.card);
+            });
+        })
+        .patch(function(req, res){
+            if(req.body._id)
+                delete req.body._id;
+            for(let p in req.body){
+                req.card[p] = req.body[p];
+            }
+            req.card.save(function(err){
+                if(err)
+                    res.status(500).send(err);
+                else
+                    res.json(req.card);
+            });
         });
     return atmRouter;
 }
