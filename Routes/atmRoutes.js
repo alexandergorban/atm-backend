@@ -73,6 +73,14 @@ function routes() {
                 else
                     res.json(req.card);
             });
+        })
+        .delete(function (req, res) {
+            req.card.remove(function (err) {
+                if(err)
+                    res.status(500).send(err);
+                else
+                    res.status(204).send('Removed');
+            });
         });
     return atmRouter;
 }
