@@ -28,31 +28,34 @@ function routes() {
             });
         });
 
+    atmRouter.use('/cards/:cardNumber', function (req, res, next) {
+        Card.findOne({ Number: (req.params.cardNumber).toString() }, function(err, card){
+            if(err){
+                res.status(500).send(err);
+            } else if (card){
+                req.card = card;
+                next();
+            } else {
+                res.status(404).send('no card found');
+            }
+        });
+    });
+
     atmRouter.route('/cards/:cardNumber')
         .get(function (req, res) {
-            Card.findOne({ Number: (req.params.cardNumber).toString() }, function(err, card){
-                if(err)
-                    res.status(500).send(err);
-                else
-                    res.json(card);
-            });
+            res.json(req.card);
         })
         .put(function (req, res) {
-            Card.findOne({ Number: (req.params.cardNumber).toString() }, function (err, card) {
-                if(err)
-                    res.status(500).send(err);
-                else
-                    card.Number = req.body.Number;
-                    card.ExpiresEndDate = req.body.ExpiresEndDate;
-                    card.CVV = req.body.CVV;
-                    card.Pin = req.body.Pin;
-                    card.Balance = req.body.Balance;
-                    card.CardHolder = req.body.CardHolder;
-                    card.CardType = req.body.CardType;
-                    card.CardActive = req.body.CardActive;
-                    card.save();
-                    res.json(card);
-            });
+            req.card.Number = req.body.Number;
+            req.card.ExpiresEndDate = req.body.ExpiresEndDate;
+            req.card.CVV = req.body.CVV;
+            req.card.Pin = req.body.Pin;
+            req.card.Balance = req.body.Balance;
+            req.card.CardHolder = req.body.CardHolder;
+            req.card.CardType = req.body.CardType;
+            req.card.CardActive = req.body.CardActive;
+            req.card.save();
+            res.json(req.card);
         });
     return atmRouter;
 }
